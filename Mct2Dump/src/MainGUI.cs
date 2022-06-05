@@ -1,7 +1,6 @@
 ﻿using Swsk33.ReadAndWriteSharp.FileUtil;
 using System;
 using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Swsk33.Mct2Dump
@@ -85,37 +84,6 @@ namespace Swsk33.Mct2Dump
 			}
 			// 执行转换
 			operateButtonsAndTip(false);
-			new Thread(() =>
-			{
-				if (mctToDumpOption.Checked)
-				{
-					byte[] data = ICFileReader.ReadTextToByte(inputFilePath.Text);
-					if (data.Length != 1024)
-					{
-						MessageBox.Show("原文件大小不正确！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						operateButtonsAndTip(true);
-						return;
-					}
-					BinaryUtils.WriteBinaryFile(outputFilePath.Text, data);
-				}
-				else if (dumpToMctOption.Checked)
-				{
-					string result = null;
-					try
-					{
-						result = ICFileReader.ReadBinaryToText(inputFilePath.Text);
-					}
-					catch (Exception)
-					{
-						MessageBox.Show("原文件大小不正确！", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						operateButtonsAndTip(true);
-						return;
-					}
-					File.WriteAllText(outputFilePath.Text, result);
-				}
-				MessageBox.Show("转换完成！", "完成", MessageBoxButtons.OK, MessageBoxIcon.Information);
-				operateButtonsAndTip(true);
-			}).Start();
 		}
 	}
 }
