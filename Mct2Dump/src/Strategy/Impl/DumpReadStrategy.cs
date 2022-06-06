@@ -1,4 +1,6 @@
 ﻿using Swsk33.Mct2Dump.Model;
+using Swsk33.ReadAndWriteSharp.FileUtil;
+using System.Windows.Forms;
 
 namespace Swsk33.Mct2Dump.Strategy.Impl
 {
@@ -7,14 +9,20 @@ namespace Swsk33.Mct2Dump.Strategy.Impl
 	/// </summary>
 	public class DumpReadStrategy : ReadStrategy
 	{
-		/// <summary>
-		/// 读取dump文件
-		/// </summary>
-		/// <param name="data">原始dump文件数据，byte数组（二进制字节数据）</param>
-		/// <returns>解析后的IC卡类型数据</returns>
-		public ICCardData ReadData(object data)
+		public string OpenFile()
 		{
-			byte[] originData = (byte[])data;
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = "dump文件/bin文件/mfd文件|*.dump;*.bin;*.mfd";
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				return dialog.FileName;
+			}
+			return null;
+		}
+
+		public ICCardData ReadData(string filePath)
+		{
+			byte[] originData = BinaryUtils.ReadBinaryFile(filePath);
 			ICCardData result = new ICCardData();
 			// 16个扇区逐个读取，也就是一次读取64字节
 			for (int i = 0; i < 16; i++)

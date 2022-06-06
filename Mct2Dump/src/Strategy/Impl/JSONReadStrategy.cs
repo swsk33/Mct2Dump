@@ -2,6 +2,8 @@
 using Swsk33.Mct2Dump.Model;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Swsk33.Mct2Dump.Strategy.Impl
 {
@@ -10,15 +12,21 @@ namespace Swsk33.Mct2Dump.Strategy.Impl
 	/// </summary>
 	public class JSONReadStrategy : ReadStrategy
 	{
-		/// <summary>
-		/// 读取JSON数据
-		/// </summary>
-		/// <param name="data">原JSON字符串</param>
-		/// <returns>解析后的IC卡类型数据</returns>
-		public ICCardData ReadData(object data)
+		public string OpenFile()
+		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = "json文件|*.json";
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				return dialog.FileName;
+			}
+			return null;
+		}
+
+		public ICCardData ReadData(string filePath)
 		{
 			ICCardData result = new ICCardData();
-			Dictionary<string, object> total = JsonConvert.DeserializeObject<Dictionary<string, object>>((string)data);
+			Dictionary<string, object> total = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(filePath));
 			Dictionary<string, string> blocks = JsonConvert.DeserializeObject<Dictionary<string, string>>(total["blocks"].ToString());
 			// 共十六个扇区，逐一读取
 			for (int i = 0; i < 16; i++)

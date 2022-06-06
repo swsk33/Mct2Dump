@@ -1,6 +1,8 @@
 ﻿using Swsk33.Mct2Dump.Model;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
+using System.Windows.Forms;
 
 namespace Swsk33.Mct2Dump.Strategy.Impl
 {
@@ -9,14 +11,20 @@ namespace Swsk33.Mct2Dump.Strategy.Impl
 	/// </summary>
 	public class EmlReadStrategy : ReadStrategy
 	{
-		/// <summary>
-		/// 读取EML文件
-		/// </summary>
-		/// <param name="data">原EML文件内容，为字符串数组（元素是每行）</param>
-		/// <returns>解析后的IC卡数据类型</returns>
-		public ICCardData ReadData(object data)
+		public string OpenFile()
 		{
-			string[] originData = (string[])data;
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.Filter = "eml文件|*.eml";
+			if (dialog.ShowDialog() == DialogResult.OK)
+			{
+				return dialog.FileName;
+			}
+			return null;
+		}
+
+		public ICCardData ReadData(string filePath)
+		{
+			string[] originData = File.ReadAllLines(filePath);
 			ICCardData result = new ICCardData();
 			// 16个扇区逐个读取
 			for (int i = 0; i < 16; i++)

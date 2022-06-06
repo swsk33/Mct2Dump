@@ -23,6 +23,6 @@
 		/// <summary>
 		/// 二进制格式
 		/// </summary>
-		public static readonly string DUMP = "dump";
+		public static readonly string DUMP = "dump/bin/mfd";
 	}
 }
