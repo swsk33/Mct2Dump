@@ -46,8 +46,8 @@ namespace Swsk33.Mct2Dump.Strategy.Impl
 				sector.Contents = bytes.ToArray();
 				// 然后读取密钥和访问控制
 				string keyAndControl = blocks[(i * 4 + 3).ToString()];
-				sector.KeyA = keyAndControl.Substring(0, 14);
-				sector.Control = keyAndControl.Substring(14, 6);
+				sector.KeyA = keyAndControl.Substring(0, 12);
+				sector.Control = keyAndControl.Substring(12, 8);
 				sector.KeyB = keyAndControl.Substring(20);
 				// 保存该扇区
 				result.Sectors[i] = sector;

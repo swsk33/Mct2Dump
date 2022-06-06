@@ -6,7 +6,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{62D82D1D-A62E-4ECD-BAA5-BCF1A4326BEB}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Swsk33.Mct2Dump</RootNamespace>
     <AssemblyName>Mct2Dump</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -68,11 +68,13 @@
     <Compile Include="src\Model\SectorData.cs" />
     <Compile Include="src\Param\DataType.cs" />
     <Compile Include="src\Strategy\Impl\DumpReadStrategy.cs" />
+    <Compile Include="src\Strategy\Impl\DumpWriteStrategy.cs" />
     <Compile Include="src\Strategy\Impl\EmlReadStrategy.cs" />
     <Compile Include="src\Strategy\Impl\EmlWriteStrategy.cs" />
     <Compile Include="src\Strategy\Impl\JSONReadStrategy.cs" />
     <Compile Include="src\Strategy\Impl\JSONWriteStrategy.cs" />
     <Compile Include="src\Strategy\Impl\MctReadStrategy.cs" />
+    <Compile Include="src\Strategy\Impl\MctWriteStrgtegy.cs" />
     <Compile Include="src\Strategy\ReadStrategy.cs" />
     <Compile Include="src\MainGUI.cs">
       <SubType>Form</SubType>
@@ -82,6 +84,7 @@
     </Compile>
     <Compile Include="src\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\Strategy\StrategyContext.cs" />
     <Compile Include="src\Strategy\WriteStrategy.cs" />
     <EmbeddedResource Include="src\MainGUI.resx">
       <DependentUpon>MainGUI.cs</DependentUpon>
